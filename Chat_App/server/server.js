@@ -40,8 +40,7 @@ io.on("connection", (socket)=>{
 
 app.use(express.json({limit:"4mb"}))   //so that we can upload images of 4 mb
 app.use(cors());
-
-app.use("/api/status",(req,res)=>res.send("server is live"))
+app.use("/api/status",(req,res)=>res.send("server a dis live"))
 app.use("/api/auth",userRouter);
 app.use("/api/messages", messageRouter)
 

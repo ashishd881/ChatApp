@@ -11,18 +11,19 @@ export const signup = async(req,res)=>  {
         }
         const user = await User.findOne({email})
         if(user)
-            return res.json({success:false,message:"Missing Details"})
+            return res.json({success:false,message:"Account Already created"})
         const salt =  await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password,salt)
-
+       
         const newUser = await User.create({
             fullName, email, password: hashedPassword,bio
         })
-
+        
         const token = generateToken(newUser._id)
         res.json({success: true, UserData: newUser,token, message:"Account Created successfully"})
     }catch(error){
         console.log(error.message)
+        console.log("3  error aa gayi")
         res.json({success:false,message:error.message})
     }
 }
@@ -34,10 +35,10 @@ export const login = async(req,res)=>{
         const userData = await User.findOne({email})
         const isPasswordCorrect = await bcrypt.compare(password,userData.password)
         if(!isPasswordCorrect){
-            return res.json({success: true,userData:newUser,token,message:"Invalid credentials"})
+            return res.json({success: true,user:userData,token,message:"Invalid credentials"})
         }
         const token = generateToken(userData._id)
-        res.json({success: true, UserData: newUser,token, message:"Account Created successfully"})
+        res.json({success: true, user:  userData ,token, message:"Loged in  successfully"})
     
     }catch(error){
         console.log(error.message)
@@ -47,14 +48,21 @@ export const login = async(req,res)=>{
     
 }
 
-export const checkAuth=(req,res,)=>{
-    res.json({success:true,user:req.user})
-}
+    export const checkAuth=(req,res,)=>{
+        res.json({success:true,user:req.user})
+        console.log(req.user)
+    }
 
 export const updateProfile = async(req,res)=>{
-    try {
-        const {profilePic, bio, fullName} = req.body
-        const userId = req.user._id;
+    try{
+        
+        const {bio, fullName} = req.body //req.body is necessary because we need to update the data id we use req.user we will get the previous data 
+        const {profilePic} = req.files;
+        console.log(req.user)     
+        console.log(profilePic) 
+        console.log(bio)
+        console.log(fullName) 
+        const userId = req.user._id;  //rew.user middle ware se milega
         let updatedUser;
 
         if(!profilePic){
@@ -67,7 +75,7 @@ export const updateProfile = async(req,res)=>{
         res.json({success:true, user:updatedUser})
     } catch (error) {
         console.log(error.message)
-        res.json({success:true, message:error.message})
+        res.json({success:false, message:error.message})
 
     }
 }
