@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { imagesDummyData } from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext'
+
 
 function RightSidebar({selectedUser}){
+  const {logout} = useContext(AuthContext) 
   return selectedUser && (
     <div className={`bg-[#81852B2]/10 text-white w-full relative overflow-y-scroll ${selectedUser ? "max-md:hidden": ""}`}>
       <div className='pt-16 flex flex-col items-center gap-2 text-xs font-light mx-auto'>
@@ -26,7 +29,7 @@ function RightSidebar({selectedUser}){
             ))}
         </div>
       </div>
-      <button className=' absolute bottom-5 left-1/8 transform - translate-x-1/8 bg-gradient-to-r from-purple-400 to-violet-600 text-sm font-light py-2 px-15 rounded-full cursor-pointer'>
+      <button onClick={()=>logout()} className=' absolute bottom-5 left-1/8 transform - translate-x-1/8 bg-gradient-to-r from-purple-400 to-violet-600 text-sm font-light py-2 px-15 rounded-full cursor-pointer'>
         Logout
       </button>
     </div>

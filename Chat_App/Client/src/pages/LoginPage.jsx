@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
 import { AuthContext } from '../../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
   const [currState, setCurrState] = useState("Signup")
@@ -10,7 +9,7 @@ function LoginPage() {
   const [password, setPassword] = useState("")
   const [bio, setBio] = useState("")
   const [isDataSubmitted, setIsDataSubmitted] = useState(false);
-  const navigate = useNavigate()
+ 
   
   const {Login} = useContext(AuthContext)
 

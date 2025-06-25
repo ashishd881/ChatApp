@@ -40,9 +40,9 @@ export const AuthProvider = ({children})=>{
         try {
             const {data} = await axios.post(`/api/auth/${state}`,credentials);
             if(data.success){
-                setAuthUser(data.userData);
+                setAuthUser(data.user);
                 console.log(authUser)
-                connectSocket(data.userData);
+                connectSocket(data.userData);  //yaha error ho sakti hai
                 axios.defaults.headers.common["token"] = data.token
                 setToken(data.token)
                 localStorage.setItem("token", data.token)

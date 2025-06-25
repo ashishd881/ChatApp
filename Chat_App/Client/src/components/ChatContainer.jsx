@@ -10,7 +10,7 @@ function ChatContainer({selectedUser, setSelectedUser}) {
       scrollEnd.current.scrollIntoView({behaviour:"smooth"})    //this will smoothly scroll the webpage til the end dic scrollEnd
     }
   },[])
-  console.log(selectedUser)
+  // console.log(selectedUser)
   return selectedUser ? (
     <div className='h-full overflow-scroll relative backdrop-blur-lg'>
       {/* {header } */}
