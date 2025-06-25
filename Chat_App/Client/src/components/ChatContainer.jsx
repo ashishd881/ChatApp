@@ -7,7 +7,7 @@ function ChatContainer({selectedUser, setSelectedUser}) {
 
   useEffect(()=>{
     if(scrollEnd.current){
-      scrollEnd.current.scrollintoView({behaviour:"smooth"})    //this will smoothly scroll the webpage til the end dic scrollEnd
+      scrollEnd.current.scrollIntoView({behaviour:"smooth"})    //this will smoothly scroll the webpage til the end dic scrollEnd
     }
   },[])
   console.log(selectedUser)
@@ -66,4 +66,3 @@ function ChatContainer({selectedUser, setSelectedUser}) {
 }
 
 export default ChatContainer
-// 9425151785

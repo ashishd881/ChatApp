@@ -30,17 +30,18 @@ export const AuthProvider = ({children})=>{
                 connectSocket(data.user)
             }
         } catch (error) {
-            console.log("errror hai re")
+            console.log("errror checkauth")
             toast.error(error.message)
         }
     }
 
-    //login function to handle user authentication and socket connection
-    const login = async(state, credentials)=>{
+    //Login function to handle user authentication and socket connection
+    const Login = async(state, credentials)=>{
         try {
             const {data} = await axios.post(`/api/auth/${state}`,credentials);
             if(data.success){
                 setAuthUser(data.userData);
+                console.log(authUser)
                 connectSocket(data.userData);
                 axios.defaults.headers.common["token"] = data.token
                 setToken(data.token)
@@ -88,7 +89,7 @@ export const AuthProvider = ({children})=>{
         newSocket.connect();
         setSocket(newSocket)
         newSocket.on("getOnlineUsers", (userIds)=>{
-            setOnlineUsers(userIds);
+        setOnlineUsers(userIds);
         })
     }
 
@@ -104,7 +105,7 @@ export const AuthProvider = ({children})=>{
         authUser,
         onlineUsers,
         socket,
-        login,
+        Login,
         logout,
         updateProfile
     }

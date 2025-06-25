@@ -23,13 +23,13 @@ export const signup = async(req,res)=>  {
         res.json({success: true, UserData: newUser,token, message:"Account Created successfully"})
     }catch(error){
         console.log(error.message)
-        console.log("3  error aa gayi")
+        // console.log("3  error aa gayi")
         res.json({success:false,message:error.message})
     }
 }
 
 
-export const login = async(req,res)=>{
+export const Login = async(req,res)=>{
     try{
         const {email, password} = req.body
         const userData = await User.findOne({email})
@@ -50,18 +50,14 @@ export const login = async(req,res)=>{
 
     export const checkAuth=(req,res,)=>{
         res.json({success:true,user:req.user})
-        console.log(req.user)
+        // console.log(req.user)
     }
 
 export const updateProfile = async(req,res)=>{
     try{
         
-        const {bio, fullName} = req.body //req.body is necessary because we need to update the data id we use req.user we will get the previous data 
-        const {profilePic} = req.files;
-        console.log(req.user)     
-        console.log(profilePic) 
-        console.log(bio)
-        console.log(fullName) 
+        const {bio, fullName,profilePic} = req.body //req.body is necessary because we need to update the data id we use req.user we will get the previous data 
+        // const {profilePic} = req.files;
         const userId = req.user._id;  //rew.user middle ware se milega
         let updatedUser;
 
