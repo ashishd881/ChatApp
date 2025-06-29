@@ -7,7 +7,7 @@ import {io, userSocketMap} from "../server.js"
 //get users except the logged in user
 export const getUsersForSideBar =async (req,res)=>{
     try {
-        const userId = req.user._id;
+        const userId = req.user._id;  //ye middlewarw se aa raha hai
         const filteredUsers = await User.find({_id: {$ne: userId}}).select("-password");
 
         //count the messages not seen
@@ -17,7 +17,8 @@ export const getUsersForSideBar =async (req,res)=>{
             // Each Promise resolves after the await Message.find(...) finishes
             const messages = await Message.find({senderId: user._id,
                                                 recieverId:userId, 
-                                                seen:false})
+                                                seen:false
+                                            })
             if(messages.length > 0){
                 unseenMessages[user._id] = messages.length;
             }
@@ -37,7 +38,7 @@ export const getMessages = async(req,res)=>{
         //we will get the selected users id from params
         const {id:selectedUserId}  = req.params;
         //below is logged in users id
-        const myId = req.user._id;
+        const myId = req.user._id;    //middleware ke token se aaya hai ye
 
         const messages= await Message.find({
             $or: [
@@ -51,7 +52,7 @@ export const getMessages = async(req,res)=>{
         res.json({success: true,messages})
     } catch (error) {
         console.log(error.message)
-        res.json({success:true, message:error.message})
+        res.json({success:false, message:error.message})
 
     }
 }

@@ -41,8 +41,9 @@ export const AuthProvider = ({children})=>{
             const {data} = await axios.post(`/api/auth/${state}`,credentials);
             if(data.success){
                 setAuthUser(data.user);
+                console.log(data.user)
                 console.log(authUser)
-                connectSocket(data.userData);  //yaha error ho sakti hai
+                connectSocket(data.user);  //yaha error ho sakti hai
                 axios.defaults.headers.common["token"] = data.token
                 setToken(data.token)
                 localStorage.setItem("token", data.token)
@@ -97,7 +98,7 @@ export const AuthProvider = ({children})=>{
         if(token)
             axios.defaults.headers.common["token"] = token;
         checkAuth()
-    },[])
+    },[])                      //⬅️ empty dependency array = run only once on mount
 
     const value = {
         //any state variable air function created here can be accessed throught the context in any component
