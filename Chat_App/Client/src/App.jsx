@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage'
@@ -17,6 +17,7 @@ function App() {
         <Route path='/' element={authUser ? <HomePage/> : <Navigate to="/Login"/>}/>
         <Route path='/Login' element={!authUser ? <LoginPage/>: <Navigate to="/"/>}/>
         <Route path='/profilePage' element={authUser ? <ProfilePage/> : <Navigate to="/Login"/>}/>
+        {console.log(authUser)}
       </Routes>
     </div>
   )

@@ -39,20 +39,20 @@ function SideBar() {   //at first selectedUser and setselected user were passed 
         </div>
         <div className='flex flex-col'>
             {filteredUsers.map((value,index)=>(
-            <div onClick={()=>{setSelectedUser(value); setUnseenMessages(prev =>({...prev , [value._id]:0}))}} key={index} className='flex cursor-pointer  rounded-full justify-items-start items-center relative'>
-                <img src={ value?.profilePic || assets.avatar_icon} className='w-9 rounded-full mr-4 mb-4 mt-2 ml-4'/>
-                <div className='flex flex-col '>
-                    <p> {value.fullName}</p>
+                <div onClick={()=>{setSelectedUser(value); setUnseenMessages(prev =>({...prev , [value._id]:0}))}} key={index} className='flex cursor-pointer  rounded-full justify-items-start items-center relative'>
+                    <img src={ value?.profilePic || assets.avatar_icon} className='w-9 rounded-full mr-4 mb-4 mt-2 ml-4'/>
+                    <div className='flex flex-col '>
+                        <p> {value.fullName}</p>
+                        {
+                            onlineUsers.includes(value._id)
+                            ?<span className='text-green-400 text-xs'>Online</span>
+                            :<span className='text-neutral-400 text-xs'>Offline</span>
+                        }   
+                    </div>
                     {
-                        onlineUsers.includes(value._id)
-                        ?<span className='text-green-400 text-xs'>Online</span>
-                        :<span className='text-neutral-400 text-xs'>Offline</span>
-                    }   
+                        unseenMessages[value._id]>0 && <p className=' absolute text-s top-4 right-4 h-5 w-5 flex justify-center items-center rounded-full border-1 bg-green-400 text-black'>{unseenMessages[value._id]}</p>
+                    }
                 </div>
-                {
-                    unseenMessages[value._id]>0 && <p className=' absolute text-s top-4 right-4 h-5 w-5 flex justify-center items-center rounded-full border-1 bg-green-400 text-black'>{unseenMessages[value._id]}</p>
-                }
-            </div>
 
             ))}
         </div>

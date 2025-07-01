@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react'
 import assets from '../assets/assets'
 import { AuthContext } from '../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 function LoginPage() {
   const [currState, setCurrState] = useState("Signup")
@@ -12,13 +13,17 @@ function LoginPage() {
  
   
   const {Login} = useContext(AuthContext)
-
+  const navigate = useNavigate()
   const onSubmitHandler =(event)=>{
     event.preventDefault();
     if(currState === 'Signup' && !isDataSubmitted)
     {
       setIsDataSubmitted(true)
       return; 
+    }
+    else
+    {
+      // navigate('/')
     }
     Login(currState=== "Signup"?'Signup':'Login',{fullName,email,password,bio})
   }
@@ -54,7 +59,7 @@ function LoginPage() {
                   {currState ==="Signup" ? "Create Account": "Login Now"}
                 </button>
                 <div className='flex items-center gap-2 text-sm text-gray-500'>
-                  <input type="checkbox"/>
+                  <input type="checkbox" required/>
                   <p>Agree to the Terms of use & Privacy Policy</p>
                 </div>
                 <div className='flex flex-col gap-2 justify-center items-center'>

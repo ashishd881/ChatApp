@@ -4,6 +4,7 @@ import { createContext } from "react";
 import toast from "react-hot-toast"
 import { io } from "socket.io-client";
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -12,14 +13,15 @@ const backendUrl = import.meta.env.VITE_BACKEND_URL;
 axios.defaults.baseURL = backendUrl
 
 
-export const AuthContext = createContext();
+ const AuthContext = createContext();
 
-export const AuthProvider = ({children})=>{
+ const AuthProvider = ({children})=>{
 
     const [token,setToken] = useState(localStorage.getItem("token"));
     const [authUser, setAuthUser] = useState(null);
     const [onlineUsers, setOnlineUsers] = useState([]);
     const [socket, setSocket] = useState(null);
+    const navigate = useNavigate();
 
     //check if the user is authenciated and if so, set the user data and connect the socket
     const checkAuth = async()=>{
@@ -27,6 +29,8 @@ export const AuthProvider = ({children})=>{
             const {data}  = await axios.get("/api/auth/check")
             if(data.success){
                 setAuthUser(data.user)
+                console.log(data.user)
+                console.log(authUser)
                 connectSocket(data.user)
             }
         } catch (error) {
@@ -41,13 +45,14 @@ export const AuthProvider = ({children})=>{
             const {data} = await axios.post(`/api/auth/${state}`,credentials);
             if(data.success){
                 setAuthUser(data.user);
-                console.log(data.user)
-                console.log(authUser)
+                // console.log(data.user)
+                // console.log(authUser)
                 connectSocket(data.user);  //yaha error ho sakti hai
                 axios.defaults.headers.common["token"] = data.token
                 setToken(data.token)
                 localStorage.setItem("token", data.token)
                 toast.success(data.message)
+                navigate('/')
             }else{
                 toast.error(data.message)
             }
@@ -103,7 +108,7 @@ export const AuthProvider = ({children})=>{
             axios.defaults.headers.common["token"] = token;
         checkAuth()
       
-    },[])                      //⬅️ empty dependency array = run only once on mount
+    },[authUser])                      //⬅️ empty dependency array = run only once on mount
 
     const value = {
         //any state variable air function created here can be accessed throught the context in any component
@@ -113,7 +118,8 @@ export const AuthProvider = ({children})=>{
         socket,
         Login,
         logout,
-        updateProfile
+        updateProfile,
+        setAuthUser
     }
     return(
         <AuthContext.Provider value={value}>
@@ -121,3 +127,7 @@ export const AuthProvider = ({children})=>{
         </AuthContext.Provider>
     )
 }
+
+
+export { AuthContext };
+export default AuthProvider;

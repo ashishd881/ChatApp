@@ -44,7 +44,8 @@ function ProfilePage() {
           <input onChange={(e)=>setName(e.target.value)} value={name} type='text' required 
             placeholder='Your Name' className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500'/>
           <textarea onChange={(e)=>setBio(e.target.value)} value={bio} className='p-2 border border-gray-500 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-600'
-             placeholder='Write Profile bio' required rows={4} ></textarea>
+             placeholder='Write Profile bio' required rows={4} >
+          </textarea>
           <button className='bg-gradient-to-r from-purple-400 to-violet-600 text-white p-2 rounded-full text-lg cursor-pointer' type='submit'>Save</button>
         </form>
         <img src={authUser?.profilePic || assets.logo_icon} className={`max-w-40 aspect-square rounded-full mx-10 max-sm:mt-10 ${selectedImg && 'rounded-full'}`}/>
