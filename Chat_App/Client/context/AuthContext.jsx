@@ -52,7 +52,7 @@ axios.defaults.baseURL = backendUrl
                 setToken(data.token)
                 localStorage.setItem("token", data.token)
                 toast.success(data.message)
-                navigate('/')
+                // navigate('/')
             }else{
                 toast.error(data.message)
             }
@@ -108,7 +108,7 @@ axios.defaults.baseURL = backendUrl
             axios.defaults.headers.common["token"] = token;
         checkAuth()
       
-    },[authUser])                      //⬅️ empty dependency array = run only once on mount
+    },[token])                      //⬅️ empty dependency array = run only once on mount
 
     const value = {
         //any state variable air function created here can be accessed throught the context in any component
