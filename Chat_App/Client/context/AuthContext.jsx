@@ -89,15 +89,20 @@ export const AuthProvider = ({children})=>{
         })
         newSocket.connect();
         setSocket(newSocket)
+        // console.log(newSocket)
+        // console.log(socket)
+        // console.log(newSocket.id)
         newSocket.on("getOnlineUsers", (userIds)=>{
-        setOnlineUsers(userIds);
+            setOnlineUsers(userIds);
         })
+        // console.log(onlineUsers)
     }
 
     useEffect(()=>{
         if(token)
             axios.defaults.headers.common["token"] = token;
         checkAuth()
+      
     },[])                      //⬅️ empty dependency array = run only once on mount
 
     const value = {
